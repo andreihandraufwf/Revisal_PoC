@@ -1,0 +1,10 @@
+/.analysis/
+/.entities/
+/.local/
+/.objects/
+/.project/
+/.settings/
+/.templates/
+/.tmh/
+DataLayer/~Populate_DataTable.xaml
+Tests/~TestCase_Get_Invoices.xaml
