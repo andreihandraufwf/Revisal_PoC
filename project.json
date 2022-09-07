@@ -82,9 +82,15 @@
         "testCaseId": "5283585a-090c-45db-bf9b-d2a2b0d6458c",
         "testCaseType": "TestCase",
         "fileName": "Tests\\WorkflowTestCaseTemplate.xaml"
+      },
+      {
+        "editingStatus": "InProgress",
+        "testCaseId": "274f77b2-9445-4e3d-9752-322df5c9db12",
+        "testCaseType": "TestCase",
+        "fileName": "ApplicationLayer\\Revisal\\TestCase_Revisal_InsertEmployer.xaml"
       }
     ],
-    "modernBehavior": true
+    "modernBehavior": false
   },
   "expressionLanguage": "VisualBasic",
   "entryPoints": [
