@@ -4,6 +4,7 @@
   "main": "Main.xaml",
   "dependencies": {
     "UiPath.Excel.Activities": "[2.12.3]",
+    "UiPath.Mail.Activities": "[1.17.0-preview]",
     "UiPath.System.Activities": "[22.4.4]",
     "UiPath.Testing.Activities": "[22.4.3]",
     "UiPath.UIAutomation.Activities": "[22.4.7]"
@@ -87,7 +88,13 @@
         "editingStatus": "InProgress",
         "testCaseId": "274f77b2-9445-4e3d-9752-322df5c9db12",
         "testCaseType": "TestCase",
-        "fileName": "ApplicationLayer\\Revisal\\TestCase_Revisal_InsertEmployer.xaml"
+        "fileName": "Tests\\TestCase_Revisal_InsertEmployer.xaml"
+      },
+      {
+        "editingStatus": "InProgress",
+        "testCaseId": "5795f25d-1e2e-42c1-a245-c848fd19d428",
+        "testCaseType": "TestCase",
+        "fileName": "Tests\\TestCase_Revisal_Insert_Employee.xaml"
       }
     ],
     "modernBehavior": false
