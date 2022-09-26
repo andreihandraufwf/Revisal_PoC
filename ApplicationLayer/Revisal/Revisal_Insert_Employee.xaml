@@ -1,11 +1,15 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Sequence" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Sequence" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_transactionItem" Type="InArgument(sd:DataRow)" />
+    <x:Property Name="in_revisalWindow" Type="InArgument(ui:Window)" />
   </x:Members>
+  <this:Sequence.in_revisalWindow>
+    <InArgument x:TypeArguments="ui:Window" />
+  </this:Sequence.in_revisalWindow>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1212,8154</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1213,8154</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Sequence_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="30">
@@ -70,6 +74,7 @@
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>NPOI</AssemblyReference>
       <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <sap:WorkflowViewStateService.ViewState>
@@ -89,7 +94,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message to indicate beginning of workflow" sap:VirtualizedContainerService.HintSize="512,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Opening Revisal_Insert_Employee&quot;]" />
-    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window Revisal" sap:VirtualizedContainerService.HintSize="512,7824" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="101228abb8417a169545fd2af7f86ac0" Selector="&lt;wnd app='teamnet.revisal.ui.exe' cls='HwndWrapper*' title='ReviSal - versiunea 6.0.6.0' /&gt;">
+    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Attach Window Revisal" sap:VirtualizedContainerService.HintSize="512,7824" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="101228abb8417a169545fd2af7f86ac0" Window="[in_revisalWindow]">
       <ui:WindowScope.Body>
         <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>
@@ -197,8 +202,15 @@
             </ui:GetAttribute>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Revisal_SelectFrom_List workflow" sap:VirtualizedContainerService.HintSize="436,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="ApplicationLayer\Revisal\Revisal_SelectFrom_List.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_text">[in_transactionItem("Cetatenie").ToString]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">[elementClass]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_text">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItem(&quot;Cetatenie&quot;).ToString" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="elementClass" />
+                </InArgument>
+                <InArgument x:TypeArguments="ui:Window" x:Key="in_revisalWindow">
+                  <mva:VisualBasicValue x:TypeArguments="ui:Window" ExpressionText="in_revisalWindow" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="automationid" DisplayName="Get Attribute Tip Act Identitate" sap:VirtualizedContainerService.HintSize="436,202" sap2010:WorkflowViewState.IdRef="GetAttribute_3">
@@ -218,8 +230,15 @@
             </ui:GetAttribute>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Revisal_SelectFrom_List workflow" sap:VirtualizedContainerService.HintSize="436,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="ApplicationLayer\Revisal\Revisal_SelectFrom_List.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_text">[in_transactionItem("Tip act identitate").ToString]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">[elementClass]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_text">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItem(&quot;Tip act identitate&quot;).ToString" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="elementClass" />
+                </InArgument>
+                <InArgument x:TypeArguments="ui:Window" x:Key="in_revisalWindow">
+                  <mva:VisualBasicValue x:TypeArguments="ui:Window" ExpressionText="in_revisalWindow" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" AlterIfDisabled="True" ClickBeforeTyping="True" DisplayName="Type Into 'CNP'" EmptyField="True" sap:VirtualizedContainerService.HintSize="436,134" sap2010:WorkflowViewState.IdRef="TypeInto_3" SimulateType="True" Text="[in_transactionItem(&quot;CNP&quot;).ToString]">
@@ -273,8 +292,15 @@
             </ui:GetAttribute>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Revisal_SelectFrom_List workflow" sap:VirtualizedContainerService.HintSize="436,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="ApplicationLayer\Revisal\Revisal_SelectFrom_List.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_text">[in_transactionItem("Judet").ToString]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">[elementClass]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_text">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItem(&quot;Judet&quot;).ToString" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="elementClass" />
+                </InArgument>
+                <InArgument x:TypeArguments="ui:Window" x:Key="in_revisalWindow">
+                  <mva:VisualBasicValue x:TypeArguments="ui:Window" ExpressionText="in_revisalWindow" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="automationid" DisplayName="Get Attribute automationid from Orase" sap:VirtualizedContainerService.HintSize="436,182" sap2010:WorkflowViewState.IdRef="GetAttribute_5">
@@ -294,8 +320,15 @@
             </ui:GetAttribute>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Revisal_SelectFrom_List workflow" sap:VirtualizedContainerService.HintSize="436,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="ApplicationLayer\Revisal\Revisal_SelectFrom_List.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_text">[in_transactionItem("Localitate").ToString]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">[elementClass]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_text">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItem(&quot;Localitate&quot;).ToString" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="elementClass" />
+                </InArgument>
+                <InArgument x:TypeArguments="ui:Window" x:Key="in_revisalWindow">
+                  <mva:VisualBasicValue x:TypeArguments="ui:Window" ExpressionText="in_revisalWindow" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" AlterIfDisabled="True" ClickBeforeTyping="True" DisplayName="Type Into Adresa" EmptyField="True" sap:VirtualizedContainerService.HintSize="436,114" sap2010:WorkflowViewState.IdRef="TypeInto_4" SimulateType="True" Text="[in_transactionItem(&quot;Adresa&quot;).ToString]">
@@ -365,8 +398,15 @@
             </ui:GetAttribute>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Revisal_SelectFrom_List workflow" sap:VirtualizedContainerService.HintSize="436,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="ApplicationLayer\Revisal\Revisal_SelectFrom_List.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_text">[in_transactionItem("Tip contract").ToString]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">[elementClass]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_text">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItem(&quot;Tip contract&quot;).ToString" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="elementClass" />
+                </InArgument>
+                <InArgument x:TypeArguments="ui:Window" x:Key="in_revisalWindow">
+                  <mva:VisualBasicValue x:TypeArguments="ui:Window" ExpressionText="in_revisalWindow" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="automationid" DisplayName="Get Attribute automationid form 'TipuriDurata'" sap:VirtualizedContainerService.HintSize="436,202" sap2010:WorkflowViewState.IdRef="GetAttribute_7">
@@ -386,8 +426,15 @@
             </ui:GetAttribute>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Revisal_SelectFrom_List workflow" sap:VirtualizedContainerService.HintSize="436,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="ApplicationLayer\Revisal\Revisal_SelectFrom_List.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_text">[in_transactionItem("Durata contract").ToString]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">[elementClass]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_text">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItem(&quot;Durata contract&quot;).ToString" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="elementClass" />
+                </InArgument>
+                <InArgument x:TypeArguments="ui:Window" x:Key="in_revisalWindow">
+                  <mva:VisualBasicValue x:TypeArguments="ui:Window" ExpressionText="in_revisalWindow" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="automationid" DisplayName="Get Attribute automationid 'TipuriNorma'" sap:VirtualizedContainerService.HintSize="436,202" sap2010:WorkflowViewState.IdRef="GetAttribute_8">
@@ -407,8 +454,15 @@
             </ui:GetAttribute>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Revisal_SelectFrom_List workflow" sap:VirtualizedContainerService.HintSize="436,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="ApplicationLayer\Revisal\Revisal_SelectFrom_List.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_text">[in_transactionItem("Tip norma").ToString]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">[elementClass]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_text">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItem(&quot;Tip norma&quot;).ToString" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="elementClass" />
+                </InArgument>
+                <InArgument x:TypeArguments="ui:Window" x:Key="in_revisalWindow">
+                  <mva:VisualBasicValue x:TypeArguments="ui:Window" ExpressionText="in_revisalWindow" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="automationid" DisplayName="Get Attribute automationid from 'Durata Timp Munca'" sap:VirtualizedContainerService.HintSize="436,202" sap2010:WorkflowViewState.IdRef="GetAttribute_9">
@@ -428,8 +482,15 @@
             </ui:GetAttribute>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Revisal_SelectFrom_List workflow" sap:VirtualizedContainerService.HintSize="436,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="ApplicationLayer\Revisal\Revisal_SelectFrom_List.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_text">[in_transactionItem("Durata timp munca").ToString]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">[elementClass]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_text">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItem(&quot;Durata timp munca&quot;).ToString" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="elementClass" />
+                </InArgument>
+                <InArgument x:TypeArguments="ui:Window" x:Key="in_revisalWindow">
+                  <mva:VisualBasicValue x:TypeArguments="ui:Window" ExpressionText="in_revisalWindow" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="automationid" DisplayName="Get Attribute automationid from 'Repartizare timp munca'" sap:VirtualizedContainerService.HintSize="436,202" sap2010:WorkflowViewState.IdRef="GetAttribute_10">
@@ -449,8 +510,15 @@
             </ui:GetAttribute>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Revisal_SelectFrom_List workflow" sap:VirtualizedContainerService.HintSize="436,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="ApplicationLayer\Revisal\Revisal_SelectFrom_List.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_text">[in_transactionItem("Repartizare timp munca").ToString]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">[elementClass]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_text">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_transactionItem(&quot;Repartizare timp munca&quot;).ToString" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_elementClass">
+                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="elementClass" />
+                </InArgument>
+                <InArgument x:TypeArguments="ui:Window" x:Key="in_revisalWindow">
+                  <mva:VisualBasicValue x:TypeArguments="ui:Window" ExpressionText="in_revisalWindow" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
             <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'Continuare'" sap:VirtualizedContainerService.HintSize="436,106" sap2010:WorkflowViewState.IdRef="Click_6" KeyModifiers="None" MouseButton="BTN_LEFT">
